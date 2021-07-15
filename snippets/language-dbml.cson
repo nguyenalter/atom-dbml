@@ -2,6 +2,49 @@
 # https://github.com/atom/language-javascript/blob/master/snippets/javascript.cson
 
 '.source.dbml':
-  'Test document':
-    'prefix': 'doc'
-    'body': '@@ ${1:method} - ${2:dark}'
+  'Project template':
+    'prefix': 'project'
+    'body': '''
+      Project ${1:project_name}{
+        database_type: ${2:'PostgreSQL'}
+        Note: '${3:Description of the project}'
+      }
+      $0
+    '''
+  'Table template':
+    'prefix': 'table'
+    'body': '''
+      Table ${1:table_name} as ${2:alias_name} {
+          ${3:column_name } ${4:column_type} [${0:column_settings}]
+      }
+    '''
+  'New table with ID':
+    'description': 'Create a new table with an int id as the primary key'
+    'prefix': 'tableindex'
+    'body': '''
+      Table ${1:name} {
+        id int [pk, increment]
+        ${2:column_name} ${3:column_type} [${0:column_settings}]
+      }
+    '''
+  'One to one ref':
+    'prefix': 'oto',
+    'body': 'Ref: ${1:ref1} - ${0:ref2}'
+  'One to many ref':
+    'prefix': 'otm'
+    'body': 'Ref: ${1:ref1} < ${0:ref2}'
+  'Many to one ref':
+    'prefix': 'mto'
+    'body': 'Ref: ${1:ref1} > ${0:ref2}'
+  'Many to many':
+    'description': 'Create many-to-many relationship from 2 many-to-one relationships, detail: https://community.dbdiagram.io/t/tutorial-many-to-many-relationship/412'
+    'prefix': 'mtm'
+    'body': '''
+      Table ${1:name} {
+        ${2:col1} int [not null, ref: > ${3:ref1}]
+        ${4:col2} int [not null, ref: > ${0:ref2}]
+        Indexes {
+          (${2:col1}, ${4:col2}) [unique]
+        }
+      }
+    '''

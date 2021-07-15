@@ -1,12 +1,12 @@
 {
-  "name": "language-dbml",
-  "version": "0.0.0",
-  "description": "A short description of your language package",
+  "name": "atom-dbml",
+  "version": "0.0.1",
+  "description": "DBML syntax highlighting and auto complete for Atom",
   "keywords": [
     "language",
     "grammar"
   ],
-  "repository": "https://github.com/nguyenalter/atom-dbml-grammar",
+  "repository": "https://github.com/nguyenalter/atom-dbml",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
