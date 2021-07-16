@@ -121,3 +121,12 @@
             (`id*3`,id)
         }
     """
+  'Enum template':
+    'prefix': 'enum'
+    'body': """
+      Enum ${1:enum_name} {
+          ${2:value1} [note: 'Your note here']
+          ${3:value2}
+          ${4:value3}
+      }$0
+    """
