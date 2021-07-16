@@ -43,3 +43,8 @@ If you find an error or bug, please [create an issue](https://github.com/nguyena
 ## Contributing
 
 If you want to add to this project, feel free to fork the repository and submit a pull request.
+
+[changelog]: ./CHANGELOG.md
+[license]: ./LICENSE
+[version-badge]: https://img.shields.io/badge/version-0.1.0-blue.svg
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
