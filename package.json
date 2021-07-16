@@ -1,6 +1,6 @@
 {
   "name": "atom-dbml",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "DBML syntax highlighting and auto complete for Atom",
   "keywords": [
     "language",
