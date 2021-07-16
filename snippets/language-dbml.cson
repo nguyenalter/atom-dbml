@@ -5,7 +5,7 @@
   'Project template':
     'prefix': 'project'
     'body': '''
-      Project ${1:project_name}{
+      Project ${1:project_name} {
         database_type: ${2:'PostgreSQL'}
         Note: '${3:Description of the project}'
       }
@@ -15,7 +15,7 @@
     'prefix': 'table'
     'body': '''
       Table ${1:table_name} as ${2:alias_name} {
-          ${3:column_name } ${4:column_type} [${0:column_settings}]
+          ${3:column_name} ${4:column_type} [${0:column_settings}]
       }
     '''
   'New table with ID':
@@ -27,17 +27,48 @@
         ${2:column_name} ${3:column_type} [${0:column_settings}]
       }
     '''
-  'One to one ref':
+  'Column template':
+    'description': """
+      The list of column settings you can use:
+      - note: 'string to add notes': add a metadata note to this column
+      - primary key or pk: mark a column as primary key. For composite primary key, refer to the 'Indexes' section
+      - null or not null: mark a column null or not null
+      - unique: mark the column unique
+      - default: some_value: set a default value of the column, please refer to the 'Default Value' section below
+      - increment: mark the column as auto-increment
+    """
+    'prefix': 'column'
+    'body': """
+      ${1:column_name} ${2:column_type} [$3:{column_setting}]$0
+    """
+  'Default value':
+    'description': """
+      You can set default value as:
+      - number value starts blank: default: 123 or default: 123.456
+      - string value starts with single quotes: default: 'some string value'
+      - expression value is wrapped with parenthesis: default: `now() - interval '5 days'`
+      - boolean (true/false/null): default: false or default: null
+    """
+    'prefix': 'defval'
+    'body': """
+      default: ${0:value}
+    """
+  'One to one relationship':
+    'description': """
+      Ref examples:
+      - Ref name_optional: table1.column1 < table2.column2
+      - Ref: merchant_periods.(merchant_id, country_code) > merchants.(id, country_code)
+    """
     'prefix': 'oto',
-    'body': 'Ref: ${1:ref1} - ${0:ref2}'
-  'One to many ref':
+    'body': 'Ref: ${1:table1}.${2:col1} - ${3:table2}.${4:col2} [${0:settings_optional}]'
+  'One to many relationship':
     'prefix': 'otm'
-    'body': 'Ref: ${1:ref1} < ${0:ref2}'
-  'Many to one ref':
+    'body': 'Ref: ${1:table1}.${2:col1} < ${3:table2}.${4:col2} [${0:settings_optional}]'
+  'Many to one relationship':
     'prefix': 'mto'
-    'body': 'Ref: ${1:ref1} > ${0:ref2}'
+    'body': 'Ref: ${1:table1}.${2:col1} > ${3:table2}.${4:col2} [${0:settings_optional}]'
   'Many to many':
-    'description': 'Create many-to-many relationship from 2 many-to-one relationships, detail: https://community.dbdiagram.io/t/tutorial-many-to-many-relationship/412'
+    'description': 'Create many-to-many relationship from 2 many-to-one relationships'
     'prefix': 'mtm'
     'body': '''
       Table ${1:name} {
@@ -48,3 +79,45 @@
         }
       }
     '''
+  'Project notes':
+    'prefix': 'projectnote'
+    'body': """
+      Note: '''
+          # ${1:Project_name}
+          ${2:detail...}
+        '''$0
+    """
+  'Table notes':
+    'prefix': 'tablenote'
+    'body': """
+      Note: '${1:detail...}'$0
+    """
+  'Column notes':
+    'prefix': 'columnnote'
+    'body': """
+      [note: '${1:detail}']$0
+    """
+  'Table group':
+    'prefix': 'tablegr'
+    'body': """
+      TableGroup ${1:tablegroup_name} { // tablegroup is case-insensitive.
+          ${2:table1}
+          ${3:table2}
+          ${0:table3}
+      }
+    """
+  'Index example':
+    'prefix': 'index'
+    'body': """
+      indexes {
+            // https://www.dbml.org/docs/#index-definition
+            (id, country) [pk] // composite primary key
+            created_at [name: 'created_at_index', note: 'Date']
+            booking_date
+            (country, booking_date) [unique]
+            booking_date [type: hash]
+            (`id*2`)
+            (`id*3`,`getdate()`)
+            (`id*3`,id)
+        }
+    """
